@@ -65,7 +65,6 @@ export default function PostDetail({ user }) {
     try {
       const res = await axios.post(`http://localhost:3001/posts/${postId}/ratings`)
       if (res?.data?.rating) {
-        setPost({ post, caption: res.data.post.caption })
         await fetchPostById({ postId, setIsFetching, setError, setPost, setCaption })
       } else {
         setError("Something went wrong rating this post.")

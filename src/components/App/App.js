@@ -41,10 +41,22 @@ export default function App() {
     setPosts((oldPosts) => [newPost, ...oldPosts])
   }
 
+  const updatePost = ({ postId, postUpdate }) => {
+    setPosts((oldPosts) => {
+      return oldPosts.map((post) => {
+        if (post.id === Number(postId)) {
+          return { ...post, ...postUpdate }
+        }
+
+        return post
+      })
+    })
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar user={user} />
+        <Navbar user={user} setUser={setUser} />
         <Routes>
           <Route
             path="/"
@@ -52,7 +64,7 @@ export default function App() {
           />
           <Route path="/login" element={<Login user={user} setUser={setUser} />} />
           <Route path="/register" element={<Register user={user} setUser={setUser} />} />
-          <Route path="/posts/:postId" element={<PostDetail user={user} />} />
+          <Route path="/posts/:postId" element={<PostDetail user={user} updatePost={updatePost} />} />
           <Route path="*" element={<NotFound user={user} error={error} />} />
         </Routes>
       </BrowserRouter>
