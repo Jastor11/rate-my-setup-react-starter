@@ -6,7 +6,7 @@ import Home from "../Home/Home"
 import Register from "../Register/Register"
 import Login from "../Login/Login"
 import PostDetail from "../PostDetail/PostDetail"
-// import NotFound from "../NotFound/NotFound"
+import NotFound from "../NotFound/NotFound"
 import "./App.css"
 
 export default function App() {
@@ -45,21 +45,7 @@ export default function App() {
           <Route path="/login" element={<Login user={user} setUser={setUser} />} />
           <Route path="/register" element={<Register user={user} setUser={setUser} />} />
           <Route path="/posts/:postId" element={<PostDetail user={user} />} />
-
-          {/* <Route
-            path="*"
-            element={
-              <NotFound
-                user={user}
-                error={error}
-                products={products}
-                activeCategory={activeCategory}
-                setActiveCategory={setActiveCategory}
-                searchInputValue={searchInputValue}
-                handleOnSearchInputChange={handleOnSearchInputChange}
-              />
-            }
-          /> */}
+          <Route path="*" element={<NotFound user={user} error={error} />} />
         </Routes>
       </BrowserRouter>
     </div>
