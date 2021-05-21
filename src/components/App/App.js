@@ -22,6 +22,7 @@ export default function App() {
       try {
         const res = await axios.get("http://localhost:3001/posts")
         if (res?.data?.posts) {
+          setError(null)
           setPosts(res.data.posts)
         }
       } catch (err) {
@@ -36,12 +37,19 @@ export default function App() {
     fetchPosts()
   }, [])
 
+  const addPost = (newPost) => {
+    setPosts((oldPosts) => [newPost, ...oldPosts])
+  }
+
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar user={user} />
         <Routes>
-          <Route path="/" element={<Home user={user} error={error} posts={posts} isFetching={isFetching} />} />
+          <Route
+            path="/"
+            element={<Home user={user} error={error} posts={posts} addPost={addPost} isFetching={isFetching} />}
+          />
           <Route path="/login" element={<Login user={user} setUser={setUser} />} />
           <Route path="/register" element={<Register user={user} setUser={setUser} />} />
           <Route path="/posts/:postId" element={<PostDetail user={user} />} />

@@ -3,7 +3,7 @@ import axios from "axios"
 import NotAllowed from "../NotAllowed/NotAllowed"
 import "./NewPostForm.css"
 
-export default function NewPostForm({ user, setPosts }) {
+export default function NewPostForm({ user, addPost }) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const [form, setForm] = useState({
@@ -22,14 +22,15 @@ export default function NewPostForm({ user, setPosts }) {
     try {
       const res = await axios.post(`http://localhost:3001/posts`, form)
       if (res?.data?.post) {
-        // setAppState(res.data)
+        addPost(res.data.post)
+        setForm({ caption: "", imageUrl: "" })
       } else {
         setError("Something went wrong with post creation.")
       }
     } catch (err) {
       console.log(err)
       const message = err?.response?.data?.error?.message
-      setError(message ?? "Something went wrong with post creation.")
+      setError(message ?? String(err))
     } finally {
       setIsLoading(false)
     }
